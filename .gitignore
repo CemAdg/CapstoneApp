@@ -18,5 +18,3 @@ docs/_build/
 __pycache__
 .env_file
 backend/env
-backend/src/auth/settings.yml
-backend/src/database/credentials.yml
