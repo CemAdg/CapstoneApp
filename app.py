@@ -1,6 +1,8 @@
 import os
 from flask import Flask
-from models import setup_db
+from flask_cors import CORS
+from flask_sqlalchemy import SQLAlchemy
+from database.models import setup_db
 
 def create_app(test_config=None):
 
