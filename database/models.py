@@ -16,6 +16,15 @@ def setup_db(app, database_path=database_path):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
+    #db.create_all()
+
+
+"""
+drops the database tables and starts fresh
+can be used to initialize a clean database
+"""
+def db_drop_and_create_all():
+    db.drop_all()
     db.create_all()
 
 
@@ -29,13 +38,16 @@ class Person(db.Model):
   id = Column(Integer, primary_key=True)
   name = Column(String)
   catchphrase = Column(String)
+  age = Column(Integer)
 
   def __init__(self, name, catchphrase=""):
     self.name = name
     self.catchphrase = catchphrase
+    self.age = age
 
   def format(self):
     return {
       'id': self.id,
       'name': self.name,
-      'catchphrase': self.catchphrase}
+      'catchphrase': self.catchphrase,
+      'age': self.age}
