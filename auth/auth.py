@@ -37,7 +37,10 @@ get_token_auth_header() method
 
 def get_token_auth_header():
     if 'Authorization' not in request.headers:
-        abort(401)
+        raise AuthError({
+            'code': 'invalid_header',
+            'description': 'Authorization Header is required.'
+        }, 401)
 
     auth_header = request.headers['Authorization']
     header_parts = auth_header.split(' ')
