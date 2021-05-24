@@ -268,7 +268,7 @@ def create_app(test_config=None):
 
 
     '''
-        DELETE /movies endpoint: remove a movie
+        DELETE /movies endpoint: delete a movie
         only authorized for role "Executive Producer"
     '''
     @app.route('/movies/<int:movie_id>', methods=['DELETE'])
