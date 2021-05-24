@@ -27,6 +27,77 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "POST /actors",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"John Doe\",\r\n    \"age\":27,\r\n    \"gender\":\"m\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/actors",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"actors"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH  /actors",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"name\":\"John Doe\",\r\n    \"age\":30,\r\n    \"gender\":\"m\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/actors/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"actors",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE  /actors",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/actors/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"actors",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				},
@@ -49,12 +120,90 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "POST /movies",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"Titantic\",\r\n    \"release_date\":\"01.23.1998\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/movies",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "PATCH  /movies",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"Titantic\",\r\n    \"release_date\":\"01.08.1998\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/movies/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"movies",
+										"1"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "DELETE  /movies",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/movies/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"movies",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
 			],
 			"auth": {
-				"type": "bearer"
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imp4MFlyZmNKajhpdWNKSFh5X3NXYiJ9.eyJpc3MiOiJodHRwczovL2NlbWFrZGFnLXNlcnZpY2VzLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MDk3Y2YyYTljMzA5NzAwNjk5MTQzOTYiLCJhdWQiOiJjYXN0aW5nLWFnZW5jeSIsImlhdCI6MTYyMTg2MTQzMywiZXhwIjoxNjIxOTMzNDUzLCJhenAiOiJLWFloYXRVTFVYODE1Y09McElCN0YzOWNrb1hyeFhLZSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZ2V0OmFjdG9ycyIsImdldDptb3ZpZXMiXX0.e0HjQiQAJTehkSlAG5rbgMWHiUSjewpeu5VuSM4CLG-zFGQlsugGkroRyJnaXTiclXQF_jFSteTx1dayjNIKnRdbYN3D_JJ7fyMJSnrCnn9g9QXTZw2o00VkCFRefD0MPKf9beF1Qfr30DIwoUF5U5Hs4R1Ppomw7FpOC0JOwDteau3Fh0vxuTmZwVZpIRAAVF_UXosV2eqpl2afyT-0o4wEM0_uLOcn1loITINN2OZBuHV4-NsRcN5LbPaMllgKXwJzZFZE9I1pHpMAJ2nXyOITojgjuWMvpzeWAz7ouvv2_9P5sGuTY1IgN4tOY4Ca-wnLXecFZaKw32PZ98yXNA",
+						"type": "string"
+					}
+				]
 			},
 			"event": [
 				{
@@ -194,6 +343,32 @@
 							"response": []
 						},
 						{
+							"name": "POST /movies",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "{\r\n    \"title\":\"Titantic\",\r\n    \"release_date\":\"01.23.1998\"\r\n}",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{host}}/movies",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"movies"
+									]
+								}
+							},
+							"response": []
+						},
+						{
 							"name": "PATCH  /movies",
 							"request": {
 								"method": "PATCH",
@@ -219,12 +394,37 @@
 								}
 							},
 							"response": []
+						},
+						{
+							"name": "DELETE  /movies",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{host}}/movies/1",
+									"host": [
+										"{{host}}"
+									],
+									"path": [
+										"movies",
+										"1"
+									]
+								}
+							},
+							"response": []
 						}
 					]
 				}
 			],
 			"auth": {
-				"type": "bearer"
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imp4MFlyZmNKajhpdWNKSFh5X3NXYiJ9.eyJpc3MiOiJodHRwczovL2NlbWFrZGFnLXNlcnZpY2VzLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MDlmYWNjZjE0YjM5YTAwNmFhMTQwZjQiLCJhdWQiOiJjYXN0aW5nLWFnZW5jeSIsImlhdCI6MTYyMTg2MjIwNCwiZXhwIjoxNjIxOTM0MjI0LCJhenAiOiJLWFloYXRVTFVYODE1Y09McElCN0YzOWNrb1hyeFhLZSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmFjdG9ycyIsImdldDphY3RvcnMiLCJnZXQ6bW92aWVzIiwicGF0Y2g6YWN0b3JzIiwicGF0Y2g6bW92aWVzIiwicG9zdDphY3RvcnMiXX0.H_-F6qsGaY3TUVVno7j6bl7V9z86WJ0747AfsB3O5W60zZcG9BqMfGKN2rMO_X4HKs6AbeeAmkowoy_o_n3Ar8SAC_Ba-NQp4Jl801dYGxSrokafBiCDpdOvLhHfn-dX2mfRNTJaogibiU6VESFkO8wMyPox3Ay7apm1oa6k2rUUTemAJYtUDX_cHq3i5HyqyIldNBzNtqwuugI3x_MrfjnOg7WYQ40Mu4E1DrzVskb-fcLUg22TAqcFZLXli26hzN2QT8eodx9OVuZVn6o0Mj4CB-3ibwn2t-R-oLFzYMJlDFmG_0LBkJOeVEpr8HYG6Ju_zj6uq_k2VcPfHTATHQ",
+						"type": "string"
+					}
+				]
 			},
 			"event": [
 				{
@@ -438,7 +638,14 @@
 				}
 			],
 			"auth": {
-				"type": "bearer"
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Imp4MFlyZmNKajhpdWNKSFh5X3NXYiJ9.eyJpc3MiOiJodHRwczovL2NlbWFrZGFnLXNlcnZpY2VzLmV1LmF1dGgwLmNvbS8iLCJzdWIiOiJhdXRoMHw2MGFiOWVjMGEwYTk3NjAwNzBkOWNmYmMiLCJhdWQiOiJjYXN0aW5nLWFnZW5jeSIsImlhdCI6MTYyMTg2MjI1OSwiZXhwIjoxNjIxOTM0Mjc5LCJhenAiOiJLWFloYXRVTFVYODE1Y09McElCN0YzOWNrb1hyeFhLZSIsInNjb3BlIjoiIiwicGVybWlzc2lvbnMiOlsiZGVsZXRlOmFjdG9ycyIsImRlbGV0ZTptb3ZpZXMiLCJnZXQ6YWN0b3JzIiwiZ2V0Om1vdmllcyIsInBhdGNoOmFjdG9ycyIsInBhdGNoOm1vdmllcyIsInBvc3Q6YWN0b3JzIiwicG9zdDptb3ZpZXMiXX0.OPzAtXWOQajKU3M0wrdDrna52FfPPhs09gt4yhSs9p9fKyj-S6_nyIXtq3HGdoUUTSu8MITgc0kJQzUW1KipT1anBYDP0y7wGQiYxuJwIJt7p1n6-JQYLzii4psuPc41SVSENHt-Id2h_YYtEL9OrbRFuzI0_6UcSusQjIcEuE6y0QD2p3qhVYxHVHVbqpiYjBaUeFjxkhDq6i0GJkfY-0k5sU_1WKHaiyiDS9CaDSwQOdzBmjRLIn7qU-sl5oJqXboaY824Ihs46zLGFYEE0eP0XX9vXWBpnho8rLkPbCclV3tpCzNJ2AappBi_3ujxapUgs3sBsayLfXYgV7ehVg",
+						"type": "string"
+					}
+				]
 			},
 			"event": [
 				{
@@ -485,12 +692,17 @@
 	"variable": [
 		{
 			"key": "host",
-			"value": "https://cems-capstone-app.herokuapp.com"
+			"value": "http://127.0.0.1:5000",
+			"disabled": true
 		},
 		{
 			"key": "host",
-			"value": "http://127.0.0.1:5000",
+			"value": "https://cems-capstone-app.herokuapp.com",
 			"disabled": true
+		},
+		{
+			"key": "host",
+			"value": "https://cems-casting-agency.herokuapp.com/"
 		}
 	]
 }
