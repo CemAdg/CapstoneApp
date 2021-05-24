@@ -294,12 +294,10 @@ def create_app(test_config=None):
 
 
 
-
-
-
     '''
     error handlers for AuthError and aborts
     '''
+
     @app.errorhandler(400)
     def bad_request(error):
         return jsonify({
