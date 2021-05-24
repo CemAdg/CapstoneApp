@@ -54,18 +54,26 @@ def create_app(test_config=None):
         return jsonify("Healthy")
 
 
+
     '''
-        GET /actors endpoint to view all actors 
+    ACTOR ROUTES
+    '''
+
+    '''
+        GET /actors endpoint: view all actors 
         authorized for all Casting Agency roles 
     '''
     @app.route('/actors', methods=['GET'])
     #@requires_auth('get:actors')
     def get_actors():
         
+        actors = Actor.query.order_by(Actor.id).all()
+
+        # if no actors were found:
+        if not actors:
+            abort(404)
+
         try:
-            actors = Actor.query.all()
-            if not actors:
-                abort(404)
             actors = [actor.format() for actor in actors]
 
             return jsonify({
@@ -78,7 +86,7 @@ def create_app(test_config=None):
 
 
     '''
-        POST /actors endpoint add a new actor 
+        POST /actors endpoint: add a new actor 
         authorized for roles "Casting Director" and "Executive Producer"
     '''
     @app.route('/actors', methods=['POST'])
@@ -104,12 +112,211 @@ def create_app(test_config=None):
             abort(422)
 
 
+    '''
+        PATCH /actors endpoint: modify an actor 
+        authorized for roles "Casting Director" and "Executive Producer"
+    '''
+    @app.route('/actors/<int:actor_id>', methods=['PATCH'])
+    #@requires_auth('patch:actors')
+    def update_actor(actor_id):
+
+        actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+
+        # if no actor was found:
+        if not actor:
+            abort(404)
+
+        try:
+            data = request.get_json()
+
+            if 'name' in data:
+                actor.name = data.get('name')
+
+            if 'age' in data:
+                actor.age = data.get('age')
+
+            if 'gender' in data:
+                actor.gender = data.get('gender')
+
+            actor.update()
+
+            return jsonify({
+                'success': True,
+                'actors': [actor.format()]
+            }), 200
+
+        except BaseException:
+            abort(422)
+
+
+    '''
+        DELETE /actors endpoint: remove an actor 
+        authorized for roles "Casting Director" and "Executive Producer"
+    '''
+    @app.route('/actors/<int:actor_id>', methods=['DELETE'])
+    #@requires_auth('delete:actors')
+    def delete_actor(actor_id):
+
+        actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
+        
+        # if no actor was found:
+        if not actor:
+            abort(404)
+
+        try:
+            actor.delete()
+
+            return jsonify({
+                'success': True,
+                'delete': actor_id
+            }), 200
+
+        except BaseException:
+            abort(422)
 
 
 
     '''
-    error handler for AuthError and aborts
+    MOVIE ROUTES
     '''
+
+    '''
+        GET /movies endpoint: view all movies 
+        authorized for all Casting Agency roles 
+    '''
+    @app.route('/movies', methods=['GET'])
+    #@requires_auth('get:movies')
+    def get_movies():
+        
+        movies = Movie.query.order_by(Movie.id).all()
+
+        # if no moves were found:
+        if not movies:
+            abort(404)
+
+        try:
+            movies = [movie.format() for movie in movies]
+
+            return jsonify({
+                'success': True,
+                'movies': movies
+            })
+
+        except BaseException:
+            abort(422)
+
+
+    '''
+        POST /movies endpoint: add a new movie 
+        only authorized for role "Executive Producer"
+    '''
+    @app.route('/movies', methods=['POST'])
+    #@requires_auth('post:movies')
+    def create_movie():
+
+        try:
+            data = request.get_json()
+
+            movie = Movie(
+                title=data.get('title'),
+                release_date=data.get('release_date')
+            )
+            movie.insert()
+
+            return jsonify({
+                'success': True,
+                'movies': movie.format()
+            }), 200
+
+        except BaseException:
+            abort(422)
+
+
+    '''
+        PATCH /movies endpoint: modify a movie
+        authorized for roles "Casting Director" and "Executive Producer"
+    '''
+    @app.route('/movies/<int:movie_id>', methods=['PATCH'])
+    #@requires_auth('patch:movies')
+    def update_movie(movie_id):
+
+        movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+
+        # if no movie was found:
+        if not movie:
+            abort(404)
+
+        try:
+            data = request.get_json()
+
+            if 'title' in data:
+                movie.title = data.get('title')
+
+            if 'release_date' in data:
+                movie.release_date = data.get('release_date')
+
+            movie.update()
+
+            return jsonify({
+                'success': True,
+                'movies': [movie.format()]
+            }), 200
+
+        except BaseException:
+            abort(422)
+
+
+
+    '''
+        DELETE /movies endpoint: remove a movie
+        only authorized for role "Executive Producer"
+    '''
+    @app.route('/movies/<int:movie_id>', methods=['DELETE'])
+    #@requires_auth('delete:movies')
+    def delete_movie(movie_id):
+
+        movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
+        
+        # if no movie was found:
+        if not movie:
+            abort(404)
+
+        try:
+            movie.delete()
+
+            return jsonify({
+                'success': True,
+                'delete': movie_id
+            }), 200
+
+        except BaseException:
+            abort(422)
+
+
+
+
+
+
+    '''
+    error handlers for AuthError and aborts
+    '''
+    @app.errorhandler(400)
+    def bad_request(error):
+        return jsonify({
+            "success": False,
+            "error": 400,
+            "message": "bad request"
+        }), 400
+
+
+    @app.errorhandler(404)
+    def not_found(error):
+        return jsonify({
+            "success": False,
+            "error": 404,
+            "message": "resource not found"
+        }), 404
+
 
     @app.errorhandler(422)
     def unprocessable(error):
@@ -118,6 +325,7 @@ def create_app(test_config=None):
             "error": 422,
             "message": "unprocessable"
         }), 422
+
 
     @app.errorhandler(AuthError)
     def handle_auth_error(ex):
