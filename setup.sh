@@ -1,5 +1,9 @@
 #!/bin/bash
 # Script for setup environment variables
+
+
+export AUTH0_DOMAIN="cemakdag-services.eu.auth0.com"
+echo $AUTH0_DOMAIN
 export ALGORITHMS="RS256"
 echo $ALGORITHMS
 export API_AUDIENCE="casting-agency"
