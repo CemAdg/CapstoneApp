@@ -127,6 +127,7 @@ def verify_decode_jwt(token):
                 'n': key['n'],
                 'e': key['e']
             }
+    
     if rsa_key:
         try:
             # USE THE KEY TO VALIDATE THE JWT
@@ -161,7 +162,6 @@ def verify_decode_jwt(token):
                 'description': 'Unable to find the appropriate key.'
     }, 400)
 
-    #raise Exception('Not Implemented')
 
 
 '''
