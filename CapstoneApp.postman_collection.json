@@ -697,12 +697,12 @@
 		},
 		{
 			"key": "host",
-			"value": "https://cems-capstone-app.herokuapp.com"
+			"value": "https://cems-capstone-app.herokuapp.com",
+			"disabled": true
 		},
 		{
 			"key": "host",
-			"value": "https://cems-casting-agency.herokuapp.com/",
-			"disabled": true
+			"value": "https://cems-casting-agency.herokuapp.com/"
 		}
 	]
 }
