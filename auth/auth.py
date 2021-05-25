@@ -17,6 +17,7 @@ AuthError Exception
 A standardized way to communicate auth failure modes
 '''
 
+
 class AuthError(Exception):
     def __init__(self, error, status_code):
         self.error = error
@@ -127,7 +128,7 @@ def verify_decode_jwt(token):
                 'n': key['n'],
                 'e': key['e']
             }
-    
+
     if rsa_key:
         try:
             # USE THE KEY TO VALIDATE THE JWT
@@ -161,7 +162,6 @@ def verify_decode_jwt(token):
         'code': 'invalid_header',
                 'description': 'Unable to find the appropriate key.'
     }, 400)
-
 
 
 '''
