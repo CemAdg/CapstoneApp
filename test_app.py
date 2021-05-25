@@ -59,12 +59,53 @@ class CastingAgencyTestCase(unittest.TestCase):
         self.assertEqual(data["message"]["description"], "Authorization Header is required.")
     
 
-    # Test if creating a new actor works with token
+    # Test creating a new actor with missing permissions
+    def test_create_actors_with_wrong_permission(self):
+        res = self.client().post('/actors', headers={
+            'Authorization': "Bearer {}".format(self.casting_assistant_token)
+        }, json={
+            "name": "John Doe",
+            "age": 25,
+            "gender": "m"
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 403)
+        self.assertFalse(data["success"])
+        self.assertIn('message', data)
 
 
+    # Test creating a new actor with correct permissions
+    def test_create_actors_with_correct_permission(self):
+        res = self.client().post('/actors', headers={
+            'Authorization': "Bearer {}".format(self.casting_director_token)
+        }, json={
+            "name": "John Doe",
+            "age": 25,
+            "gender": "m"
+        })
+        data = json.loads(res.data)
+
+        self.assertEqual(res.status_code, 200)
+        self.assertTrue(data["success"])
+        self.assertIn('actors', data)
+   
 
     # Test if creating a new actor with wrong inputs fails
+    def test_create_actors_with_wrong_inputs(self):
+        res = self.client().post('/actors', headers={
+            'Authorization': "Bearer {}".format(self.casting_director_token)
+        }, json={
+            "title": "John Doe",
+            "age": 25,
+            "gender": "m"
+        })
+        data = json.loads(res.data)
 
+        self.assertEqual(res.status_code, 422)
+        self.assertFalse(data["success"])
+        self.assertIn('message', data)
+   
 
 
 
