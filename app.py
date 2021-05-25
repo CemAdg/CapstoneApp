@@ -7,6 +7,7 @@ from flask_sqlalchemy import SQLAlchemy
 from database.models import setup_db, db_drop_and_create_all, Actor, Movie
 from auth.auth import AuthError, requires_auth
 
+
 def create_app(test_config=None):
 
     app = Flask(__name__)
@@ -19,8 +20,8 @@ def create_app(test_config=None):
     !! NOTE THIS MUST BE UNCOMMENTED ON FIRST RUN
     !! Running this funciton will add one
     '''
-    #db_drop_and_create_all()
-    
+    # db_drop_and_create_all()
+
     """
     CORS Headers
     after_request decorator to set Access-Control-Allow
@@ -38,11 +39,10 @@ def create_app(test_config=None):
     @app.route('/greeting', methods=['GET'])
     def get_greeting():
         excited = os.environ['EXCITED']
-        greeting = "Hello" 
-        if excited == 'true': greeting = greeting + "!!!!!"
+        greeting = "Hello"
+        if excited == 'true':
+            greeting = greeting + "!!!!!"
         return greeting
-
-
 
     # ROUTES
 
@@ -53,20 +53,18 @@ def create_app(test_config=None):
     def health():
         return jsonify("Healthy")
 
-
-
     '''
     ACTOR ROUTES
     '''
 
     '''
-        GET /actors endpoint: view all actors 
-        authorized for all Casting Agency roles 
+        GET /actors endpoint: view all actors
+        authorized for all Casting Agency roles
     '''
     @app.route('/actors', methods=['GET'])
     @requires_auth('get:actors')
     def get_actors(jwt):
-        
+
         actors = Actor.query.order_by(Actor.id).all()
 
         # if no actors were found:
@@ -84,9 +82,8 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
     '''
-        POST /actors endpoint: add a new actor 
+        POST /actors endpoint: add a new actor
         authorized for roles "Casting Director" and "Executive Producer"
     '''
     @app.route('/actors', methods=['POST'])
@@ -111,9 +108,8 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
     '''
-        PATCH /actors endpoint: modify an actor 
+        PATCH /actors endpoint: modify an actor
         authorized for roles "Casting Director" and "Executive Producer"
     '''
     @app.route('/actors/<int:actor_id>', methods=['PATCH'])
@@ -148,9 +144,8 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
     '''
-        DELETE /actors endpoint: remove an actor 
+        DELETE /actors endpoint: remove an actor
         authorized for roles "Casting Director" and "Executive Producer"
     '''
     @app.route('/actors/<int:actor_id>', methods=['DELETE'])
@@ -158,7 +153,7 @@ def create_app(test_config=None):
     def delete_actor(jwt, actor_id):
 
         actor = Actor.query.filter(Actor.id == actor_id).one_or_none()
-        
+
         # if no actor was found:
         if not actor:
             abort(404)
@@ -174,20 +169,18 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
-
     '''
     MOVIE ROUTES
     '''
 
     '''
-        GET /movies endpoint: view all movies 
-        authorized for all Casting Agency roles 
+        GET /movies endpoint: view all movies
+        authorized for all Casting Agency roles
     '''
     @app.route('/movies', methods=['GET'])
     @requires_auth('get:movies')
     def get_movies(jwt):
-        
+
         movies = Movie.query.order_by(Movie.id).all()
 
         # if no moves were found:
@@ -205,9 +198,8 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
     '''
-        POST /movies endpoint: add a new movie 
+        POST /movies endpoint: add a new movie
         only authorized for role "Executive Producer"
     '''
     @app.route('/movies', methods=['POST'])
@@ -230,7 +222,6 @@ def create_app(test_config=None):
 
         except BaseException:
             abort(422)
-
 
     '''
         PATCH /movies endpoint: modify a movie
@@ -265,8 +256,6 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
-
     '''
         DELETE /movies endpoint: delete a movie
         only authorized for role "Executive Producer"
@@ -276,7 +265,7 @@ def create_app(test_config=None):
     def delete_movie(jwt, movie_id):
 
         movie = Movie.query.filter(Movie.id == movie_id).one_or_none()
-        
+
         # if no movie was found:
         if not movie:
             abort(404)
@@ -292,8 +281,6 @@ def create_app(test_config=None):
         except BaseException:
             abort(422)
 
-
-
     '''
     error handlers for AuthError and aborts
     '''
@@ -305,7 +292,6 @@ def create_app(test_config=None):
             "error": 400,
             "message": "bad request"
         }), 400
-
 
     @app.errorhandler(404)
     def not_found(error):
@@ -323,7 +309,6 @@ def create_app(test_config=None):
             "message": "unprocessable"
         }), 422
 
-
     @app.errorhandler(AuthError)
     def handle_auth_error(ex):
         return jsonify({
@@ -332,8 +317,8 @@ def create_app(test_config=None):
             "message": ex.error
         }), ex.status_code
 
-
     return app
+
 
 app = create_app()
 
